@@ -1,22 +1,15 @@
-import sys, os
 from fastapi.testclient import TestClient
-
-# Add project root (where main.py is) to sys.path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from main import api  # now works
+from CICD.main import api  # <-- fixed import path
 
 client = TestClient(api)
 
 
-# Test home endpoint
 def test_home():
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {"Message": "Welcome to the Ticket Booking System"}
 
 
-# Test POST (Create Ticket)
 def test_create_ticket():
     response = client.post("/ticket", json={
         "id": 1,
@@ -29,7 +22,6 @@ def test_create_ticket():
     assert response.json()["flight_name"] == "Air Asia"
 
 
-# Test GET all tickets
 def test_get_tickets():
     response = client.get("/ticket")
     assert response.status_code == 200
@@ -37,7 +29,6 @@ def test_get_tickets():
     assert len(response.json()) > 0
 
 
-# Test PUT (Update Ticket)
 def test_update_ticket():
     response = client.put("/ticket/1", json={
         "id": 1,
@@ -50,7 +41,6 @@ def test_update_ticket():
     assert response.json()["flight_name"] == "Air Asia Updated"
 
 
-# Test DELETE (Delete Ticket)
 def test_delete_ticket():
     response = client.delete("/ticket/1")
     assert response.status_code == 200
