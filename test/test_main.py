@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from CICD.main import api  # <-- fixed import path
+from src.main import api   # <-- correct import
 
 client = TestClient(api)
 
