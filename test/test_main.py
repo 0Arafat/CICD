@@ -1,5 +1,10 @@
+import sys, os
 from fastapi.testclient import TestClient
-from main import api  # <-- corrected import
+
+# Add project root (where main.py is) to sys.path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from main import api  # now works
 
 client = TestClient(api)
 
